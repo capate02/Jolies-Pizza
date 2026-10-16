@@ -1,0 +1,137 @@
+/* Shared responsive refinements for Admin, Staff, and Customer pages. */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { width: 100%; min-width: 320px; scroll-behavior: smooth; }
+body { width: 100%; min-width: 320px; max-width: 100%; margin: 0; overflow-x: clip; }
+img, video, canvas, svg { max-width: 100%; }
+input, select, textarea, button { max-width: 100%; }
+
+/* Let flex and grid children shrink instead of forcing a wide page. */
+.app, .app > .main, .staff-layout, .staff-layout > .main,
+main, .main, .page-content, .content, .content-area,
+.dashboard-grid, .content-grid, .report-grid, .reports-grid,
+.overview-grid, .stats-grid, .summary-grid, .system-grid,
+.profile-content, .profile-top-grid, .profile-lower-grid,
+.inventory-admin-grid, .inventory-summary-grid, .category-management-grid,
+.tables-grid, .bottom-grid, .bottom-reports-grid, .top-reports-grid,
+.header, .top-header, .topbar, .page-header, .section-header,
+.card, .panel, .table-panel, .form-section { min-width: 0; }
+
+/* Admin and staff sidebars stay usable as drawers on narrow screens. */
+@media (max-width: 900px) {
+  body .app > .sidebar,
+  .staff-layout > .sidebar {
+    position: fixed !important;
+    inset: 0 auto 0 0 !important;
+    width: min(84vw, 292px) !important;
+    min-width: 0 !important;
+    max-width: calc(100vw - 48px) !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    z-index: 1200 !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    transform: translateX(-105%);
+    transition: transform .24s ease;
+  }
+  body .app > .sidebar.open,
+  .staff-layout > .sidebar.open { transform: translateX(0); }
+  body .app > .main,
+  .staff-layout > .main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+  }
+  body:has(.app > .sidebar.open)::before,
+  body:has(.staff-layout > .sidebar.open)::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1190;
+    background: rgba(12, 18, 28, .48);
+  }
+  body:has(.app > .sidebar.open),
+  body:has(.staff-layout > .sidebar.open) { overflow: hidden; }
+  .staff-layout > .main > .top-header { height: auto; min-height: 60px; padding: 10px 16px; }
+}
+
+/* Tablet: make dense multi-panel pages breathe. */
+@media (min-width: 601px) and (max-width: 1024px) {
+  [class*="dashboard-grid"], [class*="content-grid"], [class*="overview-grid"],
+  [class*="report-grid"], [class*="reports-grid"], [class*="summary-grid"],
+  [class*="profile-top-grid"], [class*="profile-lower-grid"],
+  [class*="inventory-admin-grid"], [class*="bottom-grid"],
+  [class*="tables-grid"], [class*="system-grid"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .page-content, .content, .main-content { padding-left: clamp(14px, 2.5vw, 24px); padding-right: clamp(14px, 2.5vw, 24px); }
+}
+
+@media (max-width: 760px) {
+  .app > .main, .staff-layout > .main { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+  .page-content, .content, .main-content, .content-area { padding-left: 14px !important; padding-right: 14px !important; }
+  .page-header, .section-header, .card-header, .panel-header,
+  .header-left, .header-right, .header-actions, .table-tools {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .page-header h1, .page-title { font-size: clamp(1.35rem, 5vw, 1.8rem); }
+  [class*="dashboard-grid"], [class*="content-grid"], [class*="overview-grid"],
+  [class*="report-grid"], [class*="reports-grid"], [class*="summary-grid"],
+  [class*="profile-top-grid"], [class*="profile-lower-grid"],
+  [class*="inventory-admin-grid"], [class*="category-management-grid"],
+  [class*="bottom-grid"], [class*="top-reports-grid"], [class*="tables-grid"],
+  [class*="map-grid"], [class*="details-grid"], [class*="form-grid"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  [class*="stats-grid"], [class*="quick-grid"], [class*="product-grid"], [class*="menu-grid"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .table-wrapper, .table-wrap, .table-scroll, .inventory-table-scroll,
+  .items-table-wrapper, .category-table-wrapper, .daily-table-wrap,
+  .payment-method-table-wrap, .top-items-table-wrap, .staff-table-wrap,
+  .orders-table-wrap, .payments-table-wrap, .table-responsive {
+    max-width: 100%;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  table { max-width: 100%; }
+  .modal-overlay, .checkout-modal-overlay, .rider-modal-backdrop {
+    padding: 12px !important;
+    align-items: center !important;
+    overflow-y: auto;
+  }
+  .modal, .modal-box, .checkout-modal, .checkout-modal-box,
+  .payment-modal, .receipt-modal, .rider-modal, .walkin-modal {
+    width: min(100%, 560px) !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: calc(100dvh - 24px) !important;
+    overflow-y: auto;
+  }
+  button, [role="button"], input, select { min-height: 40px; }
+  textarea { min-height: 88px; }
+  .header, .top-header, .topbar { max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+  .app > .main, .staff-layout > .main { min-width: 0; }
+  .staff-layout > .main > .top-header { min-height: 56px; padding: 8px 12px; }
+  [class*="stats-grid"], [class*="quick-grid"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  [class*="product-grid"], [class*="menu-grid"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .header, .top-header, .page-header { padding-left: 12px !important; padding-right: 12px !important; }
+  .form-row, .form-group, .field-group { min-width: 0; }
+  .form-row input, .form-row select, .form-group input, .form-group select,
+  .field-group input, .field-group select, input[type="text"], input[type="email"],
+  input[type="tel"], input[type="number"], input[type="password"], select, textarea {
+    width: 100%; min-width: 0;
+  }
+  .order-summary, .cart-summary, .summary-panel { position: static !important; width: 100%; }
+}
+
+@media (max-width: 380px) {
+  [class*="stats-grid"], [class*="quick-grid"], [class*="product-grid"], [class*="menu-grid"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
