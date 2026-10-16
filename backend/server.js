@@ -3001,6 +3001,11 @@ const server = http.createServer(async (req, res) => {
             `http://${req.headers.host || "localhost"}`
         );
 
+        if (req.method === "GET" && url.pathname === "/healthz") {
+            res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" });
+            return res.end("ok");
+        }
+
         if (req.method === "GET" && url.pathname === "/api/public/site-config") {
             const settings = await getAdminSettings();
             const { siteName, email, contact, address, hours, mapEmbedUrl } = settings.general;
@@ -4525,8 +4530,8 @@ async function startServer() {
             }
         }
 
-        server.listen(PORT, () => {
-            console.log(`Jolie's Pizza server running at http://localhost:${PORT}`);
+        server.listen(PORT, "0.0.0.0", () => {
+            console.log(`Jolie's Pizza server listening on port ${PORT}`);
         });
     } catch (error) {
         console.error("MYSQL CONNECTION ERROR:", error.message);
