@@ -1,0 +1,23 @@
+/* Shared staff navigation appearance; page content styles remain page-specific. */
+.staff-layout>.sidebar{
+    box-sizing:border-box;width:202px;min-width:202px;min-height:100vh;padding:16px 11px;
+    display:flex;flex-direction:column;position:fixed;inset:0 auto 0 0;z-index:100;
+    overflow-y:auto;scrollbar-width:none;background:linear-gradient(180deg,var(--sidebar,#a90000),color-mix(in srgb,var(--sidebar,#790000) 76%,#000));color:#fff
+}
+.staff-layout>.sidebar::-webkit-scrollbar{display:none}
+.staff-layout>.sidebar .sidebar-brand{height:130px;min-height:130px;flex:0 0 130px;position:relative;display:flex;flex-direction:row;align-items:center;justify-content:center;margin:0 0 10px}
+.staff-layout>.sidebar .sidebar-brand::after{content:"";position:absolute;left:14%;right:14%;bottom:-5px;height:1px;background:rgba(255,255,255,.72)}
+.staff-layout>.sidebar .sidebar-brand img{width:145px;height:112px;object-fit:contain}
+.staff-layout>.sidebar .sidebar-nav{display:flex;flex-direction:column;gap:7px}
+.staff-layout>.sidebar .sidebar-nav>.nav-item{box-sizing:border-box;width:100%;min-height:47px;padding:0 12px;display:flex;align-items:center;gap:8px;border:0;border-radius:8px;background:transparent;color:#fff;text-align:left;font-size:13px;font-weight:600;text-decoration:none;line-height:1.25;transition:background .16s ease,color .16s ease}
+.staff-layout>.sidebar .sidebar-nav>.nav-item i{width:20px;flex:0 0 20px;text-align:center;font-size:17px}
+.staff-layout>.sidebar .sidebar-nav>.nav-item:hover{background:rgba(255,255,255,.12)}
+.staff-layout>.sidebar .sidebar-nav>.nav-item.active{background:var(--sidebar-active,#fff);color:#fff}
+.staff-layout>.sidebar .sidebar-bottom{margin-top:auto;padding-top:20px}
+.staff-layout>.main>.top-header{box-sizing:border-box;height:72px;min-height:72px;padding:0 20px}
+@media(max-width:900px){
+    .staff-layout>.sidebar{transform:translateX(-100%);transition:transform .25s ease}
+    .staff-layout>.sidebar.open{transform:translateX(0)}
+    .staff-layout>.main{width:100%;margin-left:0}
+}
+@media(max-width:600px){.staff-layout>.main>.top-header{height:60px;min-height:60px;padding:0 12px}}

@@ -1,0 +1,539 @@
+.walkin-layout {
+    max-width: 1400px;
+    margin: 24px auto;
+    padding: 0 22px 32px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 20px
+}
+
+.walkin-main {
+    display: grid;
+    gap: 18px;
+    align-content: start
+}
+
+.walkin-card {
+    background: #fff;
+    border: 1px solid #e7e9ef;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 3px 14px #1018280c
+}
+
+.walkin-card h2,
+.walkin-modal h2 {
+    font-size: 20px;
+    margin: 0 0 6px;
+    color: #182230
+}
+
+.walkin-card p,
+.walkin-modal p {
+    margin: 0;
+    color: #667085;
+    font-size: 13px;
+    line-height: 1.5
+}
+
+.customer-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px
+}
+
+.customer-card>div {
+    grid-column: 1/-1
+}
+
+.customer-card label,
+.gcash-panel label {
+    display: grid;
+    gap: 7px;
+    color: #344054;
+    font-size: 13px;
+    font-weight: 600
+}
+
+.customer-card input,
+.gcash-panel input,
+.menu-tools input,
+.menu-tools select {
+    width: 100%;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    padding: 11px 12px;
+    font: inherit;
+    color: #182230
+}
+
+.card-heading,
+.modal-heading,
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px
+}
+
+.primary-button,
+.secondary-button {
+    border: 0;
+    border-radius: 9px;
+    padding: 12px 18px;
+    font: 600 14px inherit;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px
+}
+
+.primary-button {
+    background: #df111d;
+    color: #fff
+}
+
+.primary-button:hover {
+    background: #bd0c17
+}
+
+.primary-button:disabled {
+    opacity: .45;
+    cursor: not-allowed
+}
+
+.secondary-button {
+    background: #f2f4f7;
+    color: #344054;
+    border: 1px solid #eaecf0
+}
+
+.wide {
+    width: 100%;
+    margin-top: 12px
+}
+
+.cart-items {
+    margin-top: 16px
+}
+
+.empty-cart {
+    padding: 30px 10px;
+    text-align: center;
+    color: #98a2b3
+}
+
+.cart-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eaecf0
+}
+
+.cart-row strong {
+    display: block;
+    color: #182230
+}
+
+.cart-row small {
+    color: #667085
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.qty-controls button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #d0d5dd;
+    border-radius: 7px;
+    background: white;
+    cursor: pointer
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 17px;
+    padding-top: 16px;
+    border-top: 1px solid #eaecf0;
+    font-size: 16px
+}
+
+.cart-total strong {
+    font-size: 22px;
+    color: #df111d
+}
+
+.order-sidebar {
+    height: max-content;
+    position: sticky;
+    top: 22px
+}
+
+.order-sidebar h2 {
+    margin-top: 16px
+}
+
+.walkin-tag {
+    display: inline-flex;
+    padding: 7px 10px;
+    border-radius: 30px;
+    background: #fff1f0;
+    color: #cf1020;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .08em
+}
+
+.order-sidebar #summaryItems {
+    margin-top: 20px
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 13px;
+    color: #475467
+}
+
+.walkin-modal {
+    width: min(760px, calc(100vw - 28px));
+    max-height: min(86vh, 900px);
+    border: 0;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 20px 60px #1018284d
+}
+
+.walkin-modal::backdrop {
+    background: #10182899
+}
+
+.icon-close {
+    font-size: 28px;
+    border: 0;
+    background: none;
+    color: #475467;
+    cursor: pointer
+}
+
+.menu-tools {
+    display: grid;
+    grid-template-columns: 1fr 210px;
+    gap: 10px;
+    margin: 20px 0
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    overflow: auto;
+    max-height: 54vh;
+    padding: 2px
+}
+
+.menu-product {
+    border: 1px solid #eaecf0;
+    border-radius: 12px;
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.menu-product img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    background: #f2f4f7;
+    border-radius: 8px
+}
+
+.menu-product h3 {
+    font-size: 14px;
+    margin: 0
+}
+
+.menu-product small {
+    color: #667085;
+    min-height: 16px
+}
+
+.menu-product strong {
+    color: #cf1020
+}
+
+.menu-product button {
+    margin-top: auto;
+    border: 0;
+    border-radius: 7px;
+    padding: 9px;
+    background: #fff0f0;
+    color: #c8101e;
+    font-weight: 700;
+    cursor: pointer
+}
+
+.modal-footer {
+    border-top: 1px solid #eaecf0;
+    margin-top: 18px;
+    padding-top: 16px
+}
+
+.payment-modal {
+    max-width: 520px
+}
+
+.payment-choice {
+    border: 0;
+    padding: 0;
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px
+}
+
+.payment-choice legend {
+    font-weight: 700;
+    margin-bottom: 10px
+}
+
+.payment-choice input {
+    position: absolute;
+    opacity: 0
+}
+
+.payment-choice span {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    border: 1px solid #d0d5dd;
+    border-radius: 10px;
+    cursor: pointer
+}
+
+.payment-choice input:checked+span {
+    border: 2px solid #d71920;
+    background: #fff5f5;
+    color: #c8101e
+}
+
+.gcash-panel {
+    display: grid;
+    gap: 13px;
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 12px
+}
+
+.gcash-panel h3 {
+    margin: 0;
+    color: #1458c5
+}
+
+.gcash-panel img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    margin: auto;
+    background: #fff
+}
+
+.gcash-account {
+    font-weight: 700;
+    line-height: 1.7;
+    color: #1d2939
+}
+
+.gcash-panel small {
+    color: #667085;
+    font-weight: 400
+}
+
+.receipt-modal {
+    max-width: 480px
+}
+
+.receipt-paper {
+    font-family: Arial, sans-serif;
+    color: #202124;
+    padding: 16px
+}
+
+.receipt-paper h2 {
+    text-align: center
+}
+
+.receipt-paper .receipt-meta {
+    font-size: 13px;
+    color: #667085;
+    text-align: center
+}
+
+.receipt-paper .summary-line {
+    border-bottom: 1px dashed #d0d5dd
+}
+
+.receipt-paper .receipt-state {
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #ecfdf3;
+    color: #027a48;
+    text-align: center;
+    font-weight: 700
+}
+
+#walkinToast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #182230;
+    color: #fff;
+    padding: 13px 18px;
+    border-radius: 9px;
+    opacity: 0;
+    pointer-events: none;
+    transition: .2s;
+    z-index: 10
+}
+
+#walkinToast.show {
+    opacity: 1
+}
+
+@media(max-width:900px) {
+    .walkin-layout {
+        grid-template-columns: 1fr
+    }
+
+    .order-sidebar {
+        position: static
+    }
+}
+
+@media(max-width:600px) {
+    .walkin-layout {
+        padding: 12px;
+        gap: 12px
+    }
+
+    .walkin-card {
+        padding: 16px
+    }
+
+    .customer-card {
+        grid-template-columns: 1fr
+    }
+
+    .customer-card>div {
+        grid-column: auto
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+    }
+
+    .menu-tools {
+        grid-template-columns: 1fr
+    }
+
+    .menu-product img {
+        height: 90px
+    }
+
+    .card-heading {
+        align-items: flex-start;
+        flex-direction: column
+    }
+
+    .payment-choice {
+        grid-template-columns: 1fr 1fr
+    }
+}
+
+@media print {
+    body * {
+        visibility: hidden !important
+    }
+
+    .receipt-paper,
+    .receipt-paper * {
+        visibility: visible !important
+    }
+
+    .receipt-paper {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        padding: 24px
+    }
+
+    .receipt-modal .modal-footer {
+        display: none
+    }
+}
+
+/* Center dialogs in the viewport and keep the menu scrollable without visible bars. */
+.walkin-modal {
+    position: fixed;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    max-height: calc(100dvh - 40px);
+    overflow: hidden
+}
+
+.walkin-modal[open] {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+    max-width: calc(100vw - 28px);
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.walkin-modal[open]::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0
+}
+
+.gcash-panel[hidden],
+.gcash-panel img[hidden] {
+    display: none !important
+}
+
+.menu-grid {
+    max-height: min(54vh, calc(100dvh - 270px));
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.menu-grid::-webkit-scrollbar,
+.walkin-modal::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0
+}

@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Jolie's Pizza | Admin Notifications </title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="admin-sidebar.css?v=3">
+    <link rel="stylesheet" href="notifications.css">
+    <link rel="icon" type="image/png" href="../images/logoadmin.png">
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar" id="sidebar">
+            <div class="brand"><img src="../images/logoadmin.png" alt="Jolie's Pizza" class="sidebar-logo"></div>
+            <nav class="side-nav" aria-label="Admin navigation">
+                <button type="button" class="nav-item" data-page="Dashboard"><span
+                        class="nav-icon"></span><span>Dashboard</span></button>
+                <button type="button" class="nav-item" data-page="Orders"><span
+                        class="nav-icon"></span><span>Orders</span></button>
+                <button type="button" class="nav-item" data-page="Menu Management"><span
+                        class="nav-icon"></span><span>Menu Management</span></button>
+                <button type="button" class="nav-item" data-page="Inventory"><span
+                        class="nav-icon"></span><span>Inventory</span></button>
+                <button type="button" class="nav-item" data-page="Delivery Tracking"><span
+                        class="nav-icon"></span><span>Delivery Tracking</span></button>
+                <button type="button" class="nav-item" data-page="Online Payments"><span
+                        class="nav-icon"></span><span>Online Payments</span></button>
+                <button type="button" class="nav-item active" data-page="Notifications" aria-current="page"><span
+                        class="nav-icon"></span><span>Notifications</span><b class="notification-count"
+                        id="sidebarPending" hidden></b></button>
+                <button type="button" class="nav-item" data-page="Reports"><span
+                        class="nav-icon"></span><span>Reports</span></button>
+                <button type="button" class="nav-item" data-page="Staff Management"><span
+                        class="nav-icon"></span><span>Staff Management</span></button>
+                <button type="button" class="nav-item" data-page="Settings"><span
+                        class="nav-icon"></span><span>Settings</span></button>
+                <button class="nav-item logout-item" type="button" id="logoutButton"><span
+                        class="nav-icon"></span><span>Log Out</span></button>
+            </nav>
+        </aside>
+
+        <main class="main inventory-admin-main">
+            <header class="topbar inventory-admin-topbar">
+                <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle sidebar">☰</button>
+                <div class="page-heading">
+                    <h1>Ingredient Inventory &amp; Notifications</h1>
+                    <p>Review staff requests, receive ingredients, and record stock movements.</p>
+                </div>
+                <div class="inventory-top-actions"><span class="admin-role">Administrator</span><button
+                        class="notification-refresh" id="refreshButton" type="button">Refresh</button></div>
+            </header>
+
+            <section class="inventory-admin-content">
+                <div class="inventory-summary-grid">
+                    <article class="inventory-summary-card"><span>Ingredients</span><strong
+                            id="ingredientCount">0</strong></article>
+                    <article class="inventory-summary-card"><span>Pending staff requests</span><strong
+                            id="requestCount">0</strong></article>
+                    <article class="inventory-summary-card"><span>Low / out of stock</span><strong
+                            id="lowStockCount">0</strong></article>
+                </div>
+
+                <div class="inventory-admin-grid">
+                    <section class="admin-panel request-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Staff stock requests</h2>
+                                <p>Approve a request to record the received ingredients as stock-in.</p>
+                            </div><button class="button-primary" id="addItemButton" type="button">＋ Add
+                                Ingredient</button>
+                        </div>
+                        <div class="request-list" id="requestList">
+                            <div class="empty-message">Loading staff requests…</div>
+                        </div>
+                    </section>
+
+                    <section class="admin-panel movement-panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Record stock movement</h2>
+                                <p>Admins can record stock-in and stock-out.</p>
+                            </div>
+                        </div>
+                        <form id="movementForm" class="movement-form">
+                            <label>Ingredient<select id="movementItem" required>
+                                    <option value="">Load inventory first</option>
+                                </select></label>
+                            <label>Movement<select id="movementType">
+                                    <option value="stock_in">Stock In</option>
+                                    <option value="stock_out">Stock Out</option>
+                                </select></label>
+                            <label>Quantity<input id="movementQuantity" type="number" min="0.001" step="0.001" required
+                                    placeholder="0"></label>
+                            <label>Note<input id="movementNote" maxlength="500"
+                                    placeholder="Delivery, usage, adjustment…"></label>
+                            <button class="button-primary full-width" type="submit">Save Stock Movement</button>
+                        </form>
+                    </section>
+                </div>
+
+                <section class="admin-panel inventory-table-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Ingredient inventory</h2>
+                            <p>Current quantities update as stock movements are recorded.</p>
+                        </div>
+                    </div>
+                    <div class="inventory-table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ingredient</th>
+                                    <th>Category</th>
+                                    <th>Current Stock</th>
+                                    <th>Low Stock Threshold</th>
+                                    <th>Status</th>
+                                    <th>Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryRows">
+                                <tr>
+                                    <td colspan="6" class="empty-message">Loading inventory…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <dialog id="addItemDialog" class="admin-dialog">
+        <form id="addItemForm">
+            <div class="dialog-title-row">
+                <div><span>INVENTORY</span>
+                    <h2>Add Ingredient</h2>
+                </div><button type="button" class="dialog-close" id="closeItemDialog" aria-label="Close">×</button>
+            </div>
+            <label>Ingredient name<input id="newItemName" required maxlength="150"
+                    placeholder="Mozzarella cheese"></label>
+            <label>Category<input id="newItemCategory" maxlength="80" placeholder="Dairy"></label>
+            <label>Unit<input id="newItemUnit" required maxlength="30" placeholder="kg, g, bottles"></label>
+            <label>Low stock threshold<input id="newItemThreshold" type="number" min="0" step="0.001" value="1"
+                    required></label>
+            <div class="dialog-actions"><button type="button" class="button-secondary"
+                    id="cancelItemDialog">Cancel</button><button type="submit" class="button-primary">Save
+                    Ingredient</button></div>
+        </form>
+    </dialog>
+    <div class="admin-toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        const API_BASE_URL = ["3000", "5500"].includes(location.port) ? "http://localhost:5000" : "";
+        const items = [];
+        let refreshTimer;
+        let toastTimer;
+
+        function adminToken() {
+            for (const storage of [localStorage, sessionStorage]) {
+                try {
+                    const user = JSON.parse(storage.getItem("loggedInUser") || "null");
+                    if (user?.sessionToken && String(user.role).toLowerCase() === "admin") return user.sessionToken;
+                } catch (error) { console.warn("Could not read admin session data.", error); }
+            }
+            return "";
+        }
+
+        async function api(path, options = {}) {
+            const token = adminToken();
+            if (!token) throw new Error("Please sign in with an admin account to manage inventory.");
+            const response = await fetch(`${API_BASE_URL}${path}`, {
+                ...options,
+                headers: { Authorization: `Bearer ${token}`, ...(options.body ? { "Content-Type": "application/json" } : {}) },
+                cache: "no-store"
+            });
+            const result = await response.json();
+            if (!response.ok || !result.success) throw new Error(result.message || "Inventory request failed.");
+            return result;
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.classList.add("show");
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+        }
+
+        function quantity(value) {
+            return Number(value || 0).toLocaleString("en-PH", { maximumFractionDigits: 3 });
+        }
+
+        function dateTime(value) {
+            const date = new Date(value);
+            return Number.isNaN(date.getTime()) ? "—" : date.toLocaleString("en-PH", { dateStyle: "medium", timeStyle: "short" });
+        }
+
+        function renderItems() {
+            document.getElementById("ingredientCount").textContent = items.length;
+            document.getElementById("lowStockCount").textContent = items.filter(item => Number(item.stock) <= Number(item.threshold)).length;
+            document.getElementById("movementItem").innerHTML = '<option value="">Choose ingredient</option>' + items.filter(item => !item.inactive).map(item => `<option value="${item.id}">${escapeHTML(item.name)} · ${quantity(item.stock)} ${escapeHTML(item.unit)}</option>`).join("");
+            document.getElementById("inventoryRows").innerHTML = items.length ? items.map(item => {
+                const low = Number(item.stock) <= Number(item.threshold);
+                return `<tr><td><strong>${escapeHTML(item.name)}</strong></td><td>${escapeHTML(item.category)}</td><td>${quantity(item.stock)} ${escapeHTML(item.unit)}</td><td>${quantity(item.threshold)} ${escapeHTML(item.unit)}</td><td><span class="stock-status ${low ? "low" : "good"}">${low ? (Number(item.stock) <= 0 ? "Out of Stock" : "Low Stock") : "In Stock"}</span></td><td>${dateTime(item.updated)}</td></tr>`;
+            }).join("") : '<tr><td colspan="6" class="empty-message">No ingredients yet. Add an ingredient to start tracking inventory.</td></tr>';
+        }
+
+        function renderRequests(requests) {
+            document.getElementById("requestCount").textContent = requests.filter(request => request.status === "pending").length;
+            document.getElementById("sidebarPending").textContent = requests.filter(request => request.status === "pending").length;
+            document.getElementById("requestList").innerHTML = requests.length ? requests.map(request => `<article class="request-card ${request.status}">
+                <div class="request-card-top"><div><span class="request-tag">${escapeHTML(request.status)}</span><h3>${escapeHTML(request.itemName)}</h3><p>${escapeHTML(request.category)} · In stock: ${quantity(request.currentStock)} ${escapeHTML(request.unit)}</p></div><time>${dateTime(request.createdAt)}</time></div>
+                <div class="request-card-detail"><span><b>${quantity(request.quantity)} ${escapeHTML(request.unit)}</b> requested by ${escapeHTML(request.requestedBy)}</span><p>${escapeHTML(request.note || "No additional note")}</p></div>
+                ${request.status === "pending" ? `<form class="fulfill-form" data-request-id="${request.id}"><label>Received quantity<input name="quantity" type="number" min="0.001" step="0.001" value="${Number(request.quantity)}" required></label><label>Admin note<input name="note" maxlength="500" placeholder="Optional note"></label><button class="button-primary" type="submit">Receive &amp; Add Stock</button><button class="button-secondary reject-request" type="button" data-request-id="${request.id}">Reject</button></form>` : `<div class="request-response">${request.status === "fulfilled" ? "Stock-in recorded" : "Request rejected"}${request.respondedBy ? ` by ${escapeHTML(request.respondedBy)}` : ""}${request.responseNote ? ` · ${escapeHTML(request.responseNote)}` : ""}</div>`}
+            </article>`).join("") : '<div class="empty-message">No staff requests yet. Requests submitted by staff will appear here.</div>';
+        }
+
+        async function refreshInventoryPage() {
+            try {
+                const [inventoryResult, requestResult] = await Promise.all([
+                    api("/api/inventory"),
+                    api("/api/admin/inventory/requests?status=all")
+                ]);
+                items.splice(0, items.length, ...inventoryResult.items);
+                renderItems();
+                renderRequests(requestResult.requests);
+            } catch (error) {
+                showToast(error.message || "Could not load inventory notifications.");
+                document.getElementById("requestList").innerHTML = `<div class="empty-message error-message">${escapeHTML(error.message)}</div>`;
+            }
+        }
+
+        document.getElementById("requestList").addEventListener("submit", async event => {
+            const form = event.target.closest(".fulfill-form");
+            if (!form) return;
+            event.preventDefault();
+            const data = new FormData(form);
+            const button = form.querySelector("button[type=submit]");
+            button.disabled = true;
+            try {
+                const result = await api(`/api/admin/inventory/requests/${form.dataset.requestId}/fulfill`, {
+                    method: "POST",
+                    body: JSON.stringify({ quantity: Number(data.get("quantity")), note: String(data.get("note") || "").trim() })
+                });
+                showToast(result.message);
+                await refreshInventoryPage();
+            } catch (error) {
+                button.disabled = false;
+                showToast(error.message);
+            }
+        });
+
+        document.getElementById("requestList").addEventListener("click", async event => {
+            const button = event.target.closest(".reject-request");
+            if (!button) return;
+            button.disabled = true;
+            try {
+                const result = await api(`/api/admin/inventory/requests/${button.dataset.requestId}/reject`, { method: "POST", body: JSON.stringify({ note: "Rejected by admin" }) });
+                showToast(result.message);
+                await refreshInventoryPage();
+            } catch (error) {
+                button.disabled = false;
+                showToast(error.message);
+            }
+        });
+
+        document.getElementById("movementForm").addEventListener("submit", async event => {
+            event.preventDefault();
+            try {
+                const result = await api("/api/admin/inventory/movements", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        itemId: Number(document.getElementById("movementItem").value),
+                        movementType: document.getElementById("movementType").value,
+                        quantity: Number(document.getElementById("movementQuantity").value),
+                        note: document.getElementById("movementNote").value.trim()
+                    })
+                });
+                showToast(result.message);
+                event.currentTarget.reset();
+                await refreshInventoryPage();
+            } catch (error) { showToast(error.message); }
+        });
+
+        const addItemDialog = document.getElementById("addItemDialog");
+        document.getElementById("addItemButton").addEventListener("click", () => addItemDialog.showModal());
+        document.getElementById("closeItemDialog").addEventListener("click", () => addItemDialog.close());
+        document.getElementById("cancelItemDialog").addEventListener("click", () => addItemDialog.close());
+        document.getElementById("addItemForm").addEventListener("submit", async event => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            try {
+                const result = await api("/api/admin/inventory/items", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        name: form.querySelector("#newItemName").value.trim(),
+                        category: form.querySelector("#newItemCategory").value.trim(),
+                        unit: form.querySelector("#newItemUnit").value.trim(),
+                        threshold: Number(form.querySelector("#newItemThreshold").value)
+                    })
+                });
+                addItemDialog.close();
+                form.reset();
+                document.getElementById("newItemThreshold").value = "1";
+                showToast(result.message);
+                await refreshInventoryPage();
+            } catch (error) { showToast(error.message); }
+        });
+
+        document.getElementById("refreshButton").addEventListener("click", refreshInventoryPage);
+        document.getElementById("menuToggle").addEventListener("click", () => document.getElementById("sidebar").classList.toggle("open"));
+        document.getElementById("logoutButton").addEventListener("click", async () => {
+            const token = adminToken();
+            try { if (token) await fetch(`${API_BASE_URL}/api/logout`, { method: "POST", headers: { Authorization: `Bearer ${token}` } }); } catch { /* Clear the local session even if the server is offline. */ }
+            for (const storage of [localStorage, sessionStorage]) {
+                ["loggedInUser", "currentUser", "user", "token", "authToken"].forEach(key => storage.removeItem(key));
+            }
+            window.location.href = "../login.html";
+        });
+
+        void refreshInventoryPage();
+        refreshTimer = window.setInterval(refreshInventoryPage, 30000);
+    </script>
+    <script>
+        const adminPageMap = {
+            "Dashboard": "dashboard.html",
+            "Orders": "orders.html",
+            "Menu Management": "menu-management.html",
+            "Inventory": "inventory overview.html",
+            "Delivery Tracking": "delivery-tracking.html",
+            "Online Payments": "online-payments.html",
+            "Notifications": "notifications.html",
+            "Reports": "reports.html",
+            "Staff Management": "staff-management.html",
+            "Settings": "settings.html"
+        };
+        document.querySelectorAll(".side-nav [data-page]").forEach(button => {
+            button.addEventListener("click", () => {
+                const target = adminPageMap[button.dataset.page];
+                if (target) window.location.href = target;
+            });
+        });
+    </script>
+
+    <script src="admin-sidebar.js?v=1" defer></script>
+    <script src="sidebar-icons.js?v=2" defer></script>
+    <script src="admin-sidebar-toggle.js?v=2" defer></script>
+    <script src="../shared/site-config.js?v=3" defer></script>
+</body>
+
+</html>

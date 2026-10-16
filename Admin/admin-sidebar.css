@@ -1,0 +1,89 @@
+/* Shared Admin sidebar brand and background */
+.sidebar {
+    background: linear-gradient(
+        180deg,
+        #080d11 0%,
+        #05090c 50%,
+        #030608 100%
+    );
+}
+
+/* On desktop the same menu button collapses the fixed rail and lets the page
+   content use the freed space. On narrow screens each page keeps its existing
+   slide-in sidebar behavior. */
+@media (min-width: 901px) {
+    body:has(.sidebar.open) .sidebar {
+        transform: translateX(-100%);
+    }
+
+    body:has(.sidebar.open) .main {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+}
+
+.brand {
+    height: 130px;
+    min-height: 130px;
+    flex: 0 0 130px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.brand::after {
+    content: "";
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    bottom: -5px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.sidebar-logo,
+.brand img,
+.brand .logo {
+    width: 145px;
+    max-width: 100%;
+    height: 112px;
+    object-fit: contain;
+}
+
+/* One consistent admin sidebar across all pages. */
+body .app>.sidebar{box-sizing:border-box;width:202px;min-width:202px;height:100vh;min-height:100vh;padding:16px 11px 14px;background:linear-gradient(180deg,var(--sidebar,#080d11) 0%,var(--sidebar,#05090c) 55%,var(--sidebar,#030608) 100%);color:#fff;display:flex;flex-direction:column;overflow:hidden}
+body .app>.sidebar::-webkit-scrollbar{display:none}
+body .app>.sidebar>.brand{box-sizing:border-box;height:130px;min-height:130px;flex:0 0 130px;position:relative;display:flex;align-items:center;justify-content:center;margin:0 0 10px}
+body .app>.sidebar>.brand::after{content:"";position:absolute;left:14%;right:14%;bottom:-5px;height:1px;background:rgba(255,255,255,.72)}
+body .app>.sidebar>.brand img{width:145px;height:112px;max-width:100%;object-fit:contain}
+body .app>.sidebar>.side-nav,body .app>.sidebar>.sidebar-nav{box-sizing:border-box;width:100%;display:flex;flex-direction:column;gap:6px;padding:0;flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;-ms-overflow-style:none}
+body .app>.sidebar>.side-nav::-webkit-scrollbar,body .app>.sidebar>.sidebar-nav::-webkit-scrollbar{display:none}
+body .app>.sidebar .side-nav>.nav-item,body .app>.sidebar .sidebar-nav>.nav-item,body .app>.sidebar .nav-group>.nav-group-toggle{box-sizing:border-box;width:100%;min-height:46px;height:auto;padding:0 12px;display:flex;align-items:center;gap:10px;border:0;border-radius:9px;background:transparent;color:#fff;text-decoration:none;text-align:left;font:600 13px/1.25 Arial,Helvetica,sans-serif;cursor:pointer;transition:background .16s ease,color .16s ease}
+body .app>.sidebar .side-nav>.nav-item:hover,body .app>.sidebar .sidebar-nav>.nav-item:hover,body .app>.sidebar .nav-group>.nav-group-toggle:hover{background:rgba(255,255,255,.09)}
+body .app>.sidebar .side-nav>.nav-item.active,body .app>.sidebar .sidebar-nav>.nav-item.active,body .app>.sidebar .nav-group>.nav-group-toggle.active{background:var(--sidebar-active,#e3131b);color:#fff;box-shadow:0 4px 12px color-mix(in srgb,var(--sidebar-active,#e3131b) 22%,transparent)}
+body .app>.sidebar .nav-icon{box-sizing:border-box;width:21px;min-width:21px;height:22px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 21px;color:inherit;font-size:19px;line-height:1}
+body .app>.sidebar .nav-icon svg{width:21px;height:21px;display:block}
+body .app>.sidebar .nav-group{width:100%;display:flex;flex-direction:column;gap:2px}
+body .app>.sidebar .nav-group-toggle{font-family:inherit}
+body .app>.sidebar .nav-group-toggle>span:nth-child(2){flex:1}
+body .app>.sidebar .nav-chevron{font-size:14px;transition:transform .18s ease}
+body .app>.sidebar .nav-group.expanded .nav-chevron{transform:rotate(180deg)}
+body .app>.sidebar .submenu{display:none;flex-direction:column;gap:3px;padding:3px 0 4px 9px}
+body .app>.sidebar .submenu.open{display:flex}
+body .app>.sidebar .submenu-item{box-sizing:border-box;min-height:36px;width:calc(100% - 2px);padding:0 10px 0 27px;display:flex;align-items:center;gap:9px;border-radius:8px;color:rgba(255,255,255,.82);font:500 12px/1.2 Arial,Helvetica,sans-serif;text-decoration:none}
+body .app>.sidebar .submenu-item:hover{background:rgba(255,255,255,.08);color:#fff}
+body .app>.sidebar .submenu-item.active-sub{background:rgba(227,19,27,.17);color:#ff555b;font-weight:700}
+body .app>.sidebar .submenu-dot{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:transparent}
+body .app>.sidebar .submenu-item.active-sub .submenu-dot{background:#e3131b}
+body .app>.sidebar .notification-count{min-width:20px;height:20px;margin-left:auto;padding:0 5px;display:inline-flex;align-items:center;justify-content:center;border-radius:7px;background:#e3131b;color:#fff;font:700 11px/1 Arial,sans-serif}
+body .app>.sidebar .notification-count[hidden]{display:none!important}
+body .app>.sidebar .logout-item{margin-top:6px}
+body .app>.sidebar>.support-box{position:static;flex:0 0 auto;width:100%;margin:10px 0 0;box-sizing:border-box}
+body .app>.main{box-sizing:border-box;width:calc(100% - 202px);margin-left:202px;min-width:0}
+@media(max-width:900px){body .app>.sidebar{transform:translateX(-100%);transition:transform .24s ease}body .app>.sidebar.open{transform:translateX(0)}body .app>.main{width:100%;margin-left:0}}
+body .app .menu-toggle{box-sizing:border-box;width:40px;height:40px;min-width:40px;display:grid;place-items:center;border:1px solid #e5e7eb;border-radius:9px;background:#fff;color:#e3131b;font-size:18px;cursor:pointer}
+body .app .menu-toggle:hover{border-color:#f0a1a5;background:#fff6f6}
+body .app .menu-toggle:focus-visible{outline:2px solid #e3131b;outline-offset:2px}

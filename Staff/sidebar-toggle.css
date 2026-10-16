@@ -1,0 +1,63 @@
+/* Keep the logo-to-navigation spacing consistent across staff pages. */
+.sidebar-brand {
+    height: 130px;
+    min-height: 130px;
+    flex: 0 0 130px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.sidebar-brand::after {
+    content: "";
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    bottom: -5px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.sidebar-brand img {
+    width: 145px;
+    height: 112px;
+}
+
+.staff-profile {
+    position: relative;
+    padding-right: 32px;
+}
+
+.staff-profile-edit {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    border-radius: 7px;
+    text-decoration: none;
+    opacity: .82;
+}
+
+.staff-profile-edit:hover,
+.staff-profile-edit:focus-visible {
+    color: #fff;
+    background: rgba(255, 255, 255, .16);
+    opacity: 1;
+    outline: none;
+}
+
+/* Desktop collapse behavior for every staff sidebar. */
+@media (min-width: 901px) {
+    body:has(.sidebar.open) .sidebar {
+        transform: translateX(-100%);
+    }
+
+    body:has(.sidebar.open) .main {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+}

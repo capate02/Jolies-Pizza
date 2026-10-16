@@ -1,0 +1,36 @@
+# Node.js dependencies
+node_modules/
+**/node_modules/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+
+# Java JDK directory
+oracleJdk-27/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+node_modules/
+**/node_modules/
+oracleJdk-27/
+.env
+.env.*
+!.env.example
+
+# Java runtime files - do not upload
+oracleJdk-27/
+
+# Node.js dependencies
+node_modules/
+**/node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example

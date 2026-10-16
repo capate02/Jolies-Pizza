@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jolie's Pizza - Orders</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="orders.css">
+    <link rel="icon" type="image/png" href="../images/logostaff.png?v=2">
+    <link rel="stylesheet" href="sidebar-toggle.css">
+    <link rel="stylesheet" href="staff-sidebar.css?v=3">
+    <script src="staff-sidebar.js" defer></script>
+</head>
+
+<body>
+    <div class="staff-layout">
+
+        <!-- SIDEBAR: SAME STRUCTURE AS DASHBOARD -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+                <!-- Change this path to your logo file -->
+                <img src="../images/logostaff.png" alt="Jolie's Pizza Logo">
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+<a href="walk-in.html" class="nav-item"><i class="fa-solid fa-store"></i><span>Walk-In Customer</span></a>
+
+                <a href="orders.html" class="nav-item active">
+                    <i class="fa-regular fa-clipboard"></i>
+                    <span>Orders</span>
+                </a>
+
+                <a href="delivery-tracking.html" class="nav-item">
+                    <i class="fa-solid fa-truck-fast"></i>
+                    <span>Delivery Tracking</span>
+                </a>
+
+                <a href="inventory.html" class="nav-item">
+                    <i class="fa-solid fa-cube"></i>
+                    <span>Inventory</span>
+                </a>
+                <a href="menu-add-out.html" class="nav-item"><i class="fa-solid fa-utensils"></i><span>Menu Availability</span></a>
+
+
+                <a href="payments.html" class="nav-item">
+                    <i class="fa-regular fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+                
+
+                <a href="notifications.html" class="nav-item">
+                    <i class="fa-regular fa-bell"></i>
+                    <span>Notifications</span>
+                    
+                </a>
+
+                <a href="reports.html" class="nav-item">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Reports</span>
+                </a>
+                
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="staff-profile">
+                    <div class="staff-avatar">👨🏻‍🍳</div>
+                    <div class="staff-info">
+                        <strong>Mark Santos</strong>
+                        <span>Kitchen Staff</span>
+                        <span class="online-status">Online</span>
+                    </div>
+                </div>
+
+                <button class="nav-item logout-button" id="logoutButton" type="button">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+
+            <!-- HEADER: SAME STRUCTURE AS DASHBOARD -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle sidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <div class="welcome">
+                        <h1>Orders</h1>
+                        <p>Manage and update customer orders.</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <strong>Zone 3, San Roque</strong>
+                            <span>Northern Samar</span>
+                        </div>
+                    </div>
+
+                    <div class="header-divider"></div>
+
+                    <div class="header-date">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        <div>
+                            <strong id="currentDate">May 10, 2025</strong>
+                            <span id="currentTime">Saturday · 10:30 AM</span>
+                        </div>
+                    </div>
+
+                    <div class="header-divider"></div>
+                    <i class="fa-regular fa-bell" style="font-size:19px;"></i>
+                </div>
+            </header>
+
+            <section class="orders-page">
+                <div class="orders-layout">
+
+                    <div class="orders-main">
+
+                        <!-- ORDER STATISTICS -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon red"><i class="fa-regular fa-clipboard"></i></div>
+                                <div>
+                                    <div class="stat-label">All Orders</div>
+                                    <div class="stat-value" id="allCount">24</div>
+                                    <div class="stat-note">View all orders</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon red"><i class="fa-solid fa-user-clock"></i></div>
+                                <div>
+                                    <div class="stat-label">New</div>
+                                    <div class="stat-value" id="newCount">4</div>
+                                    <div class="stat-note">New orders</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon orange"><i class="fa-regular fa-clock"></i></div>
+                                <div>
+                                    <div class="stat-label">Preparing</div>
+                                    <div class="stat-value" id="preparingCount">8</div>
+                                    <div class="stat-note">Being prepared</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon blue"><i class="fa-solid fa-bag-shopping"></i></div>
+                                <div>
+                                    <div class="stat-label">Claimed</div>
+                                    <div class="stat-value" id="claimedCount">0</div>
+                                    <div class="stat-note">Accepted by staff</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon green"><i class="fa-regular fa-circle-check"></i></div>
+                                <div>
+                                    <div class="stat-label">Completed</div>
+                                    <div class="stat-value" id="completedCount">14</div>
+                                    <div class="stat-note">Completed today</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ORDERS TABLE -->
+                        <section class="orders-card">
+
+                            <div class="order-tabs" id="orderTabs">
+                                <button class="order-tab active" data-status="all">All Orders</button>
+                                <button class="order-tab" data-status="New">New</button>
+                                <button class="order-tab" data-status="Claimed">Claimed</button>
+                                <button class="order-tab" data-status="Preparing">Preparing</button>
+                                <button class="order-tab" data-status="Out for Delivery">Out for Delivery</button>
+                                <button class="order-tab" data-status="Completed">Completed</button>
+                                <button class="order-tab" data-status="Cancelled">Cancelled</button>
+                            </div>
+
+                            <div class="table-tools">
+                                <label class="search-box">
+                                    <input type="search" id="orderSearch"
+                                        placeholder="Search by Order ID, Customer or Phone...">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </label>
+
+                                <select class="filter-select" id="typeFilter" aria-label="Filter order type">
+                                    <option value="all">All Types</option>
+                                    <option value="Dine In">Dine In</option>
+                                    <option value="Pick Up">Pick Up</option>
+                                    <option value="Delivery">Delivery</option>
+                                </select>
+
+                                <div class="sort-wrap">
+                                    <span>Sort by:</span>
+                                    <select class="sort-select" id="sortSelect">
+                                        <option value="newest">Newest</option>
+                                        <option value="oldest">Oldest</option>
+                                        <option value="highest">Highest Total</option>
+                                        <option value="lowest">Lowest Total</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="table-scroll">
+                                <table class="orders-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Type</th>
+                                            <th>Time</th>
+                                            <th>Items</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersTableBody"></tbody>
+                                </table>
+                            </div>
+
+                            <div class="table-footer">
+                                <span id="showingText">Showing 1 to 8 of 24 orders</span>
+                                <div class="pagination" id="pagination"></div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- ORDER DETAILS PANEL -->
+                    <aside class="details-card" id="detailsCard">
+                        <div class="details-header">
+                            <h2>Order Details</h2>
+                            <button class="close-details" id="closeDetails" type="button" aria-label="Close details">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+
+                        <div class="details-body" id="detailsBody">
+                            <!-- Filled by JavaScript -->
+                        </div>
+                    </aside>
+
+                </div>
+
+                <footer class="page-footer">
+                    <span>© 2025 Jolie's Pizza San Roque. All rights reserved.</span>
+                    <span>Orders v1.0.0</span>
+                </footer>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast"></div>
+
+    <script>
+        let orders = [];
+
+        const PAGE_SIZE = 8;
+        const STATUS_TRANSITIONS = {
+            New: ["Claimed", "Cancelled"],
+            Claimed: ["Preparing", "Cancelled"],
+            Preparing: ["Out for Delivery", "Cancelled"],
+            "Out for Delivery": ["Completed", "Cancelled"],
+            Completed: [],
+            Cancelled: []
+        };
+        let activeStatus = "all";
+        let currentPage = 1;
+        let selectedOrderId = "";
+
+        const tableBody = document.getElementById("ordersTableBody");
+        const detailsBody = document.getElementById("detailsBody");
+        const toast = document.getElementById("toast");
+        const API_BASE_URL = ["3000", "5500"].includes(window.location.port)
+            ? "http://localhost:5000"
+            : "";
+
+        function getStaffSession() {
+            for (const storage of [window.localStorage, window.sessionStorage]) {
+                try {
+                    const account = JSON.parse(storage.getItem("loggedInUser") || "null");
+                    if (account?.sessionToken && ["staff", "admin"].includes(String(account.role).toLowerCase())) {
+                        return account;
+                    }
+                } catch (error) {
+                    console.warn("Could not read staff session.", error);
+                }
+            }
+            return null;
+        }
+
+        function displayStatus(status) {
+            return status === "Pending" ? "New"
+                : status === "Confirmed" ? "Claimed"
+                    : status;
+        }
+
+        async function loadOrders(showErrors = true) {
+            const account = getStaffSession();
+            if (!account) {
+                if (showErrors) showToast("Log in with a staff or admin account to view live orders.");
+                orders = [];
+                renderOrders();
+                detailsBody.innerHTML = `<p style="color:#697386;">Staff login is required to load orders.</p>`;
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/staff/orders`, {
+                    headers: { Authorization: `Bearer ${account.sessionToken}` }
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success || !Array.isArray(result.orders)) {
+                    throw new Error(result.message || "Could not load orders.");
+                }
+
+                orders = result.orders.map(order => {
+                    const createdAt = new Date(order.createdAt);
+                    return {
+                        id: order.orderNumber,
+                        customer: order.customerName,
+                        phone: order.customerPhone,
+                        type: String(order.fulfillmentType || "delivery").toLowerCase() === "pickup" ? "Pick Up" : "Delivery",
+                        pickupTime: order.pickupTime ? String(order.pickupTime).slice(0, 5) : "",
+                        pickupStatus: order.pickupStatus || "scheduled",
+                        riderAssigned: Boolean(order.riderAssigned),
+                        time: createdAt.toLocaleTimeString("en-PH", { hour: "numeric", minute: "2-digit" }),
+                        date: createdAt.toLocaleDateString("en-PH", { year: "numeric", month: "short", day: "numeric" }),
+                        items: order.items.map(item => ({
+                            name: item.name,
+                            qty: item.quantity,
+                            price: item.price
+                        })),
+                        subtotal: order.subtotal,
+                        deliveryFee: order.deliveryFee,
+                        total: order.total,
+                        status: displayStatus(order.status),
+                        payment: order.paymentMethod,
+                        paymentStatus: order.paymentStatus,
+                        address: order.deliveryAddress,
+                        note: ""
+                    };
+                });
+
+                if (!orders.some(order => order.id === selectedOrderId)) {
+                    selectedOrderId = orders[0]?.id || "";
+                }
+                renderOrders();
+                if (selectedOrderId) {
+                    const selected = orders.find(order => order.id === selectedOrderId);
+                    document.getElementById("detailsCard").hidden = false;
+                    renderDetails(selected);
+                } else {
+                    document.getElementById("detailsCard").hidden = true;
+                }
+            } catch (error) {
+                console.error("Could not load staff orders:", error);
+                if (showErrors) showToast(error.message || "Could not load orders.");
+            }
+        }
+
+        function money(value) {
+            return "₱" + Number(value).toLocaleString("en-PH", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, character => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            })[character]);
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add("show");
+
+            clearTimeout(showToast.timer);
+            showToast.timer = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2200);
+        }
+
+        function statusClass(status) {
+            if (status === "Out for Delivery") return "delivery-status";
+            return status.toLowerCase().replaceAll(" ", "-");
+        }
+
+        function typeClass(type) {
+            if (type === "Dine In") return "dine";
+            if (type === "Pick Up") return "pickup";
+            return "delivery";
+        }
+
+        function getFilteredOrders() {
+            const search = document.getElementById("orderSearch").value.toLowerCase().trim();
+            const type = document.getElementById("typeFilter").value;
+            const sort = document.getElementById("sortSelect").value;
+
+            let result = orders.filter(order => {
+                const matchesStatus =
+                    activeStatus === "all" || order.status === activeStatus;
+
+                const matchesType =
+                    type === "all" || order.type === type;
+
+                const searchable = [
+                    order.id,
+                    order.customer,
+                    order.phone,
+                    order.type,
+                    order.status
+                ].join(" ").toLowerCase();
+
+                return matchesStatus && matchesType && searchable.includes(search);
+            });
+
+            const orderTimestamp = order =>
+                new Date(`${order.date} ${order.time}`).getTime();
+
+            if (sort === "newest") {
+                result.sort((a, b) => orderTimestamp(b) - orderTimestamp(a));
+            }
+            if (sort === "oldest") {
+                result.sort((a, b) => orderTimestamp(a) - orderTimestamp(b));
+            }
+            if (sort === "highest") result.sort((a, b) => b.total - a.total);
+            if (sort === "lowest") result.sort((a, b) => a.total - b.total);
+
+            return result;
+        }
+
+        function renderOrders() {
+            const filtered = getFilteredOrders();
+            const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const visibleOrders = filtered.slice(start, start + PAGE_SIZE);
+
+            if (!visibleOrders.length) {
+                tableBody.innerHTML = `
+                <tr><td colspan="8" class="empty-row">
+                    No orders found.
+                </td></tr>`;
+            } else {
+                tableBody.innerHTML = visibleOrders.map(order => `
+                <tr data-id="${escapeHTML(order.id)}"
+                    class="${order.id === selectedOrderId ? "selected" : ""}">
+                    <td><span class="order-id">#${escapeHTML(order.id)}</span></td>
+                    <td class="customer-cell">
+                        <strong>${escapeHTML(order.customer)}</strong>
+                        <span>${escapeHTML(order.phone)}</span>
+                    </td>
+                    <td><span class="type-badge ${typeClass(order.type)}">${escapeHTML(order.type)}</span></td>
+                    <td class="time-cell">
+                        <strong>${escapeHTML(order.time)}</strong>
+                        <span>${escapeHTML(order.date)}</span>
+                    </td>
+                    <td>${order.items.reduce((sum, item) => sum + item.qty, 0)} items</td>
+                    <td><strong>${money(order.total)}</strong></td>
+                    <td><span class="status-badge ${statusClass(order.status)}">${escapeHTML(order.status)}</span></td>
+                    <td><button class="view-button" type="button" data-view="${escapeHTML(order.id)}">View</button></td>
+                </tr>
+            `).join("");
+            }
+
+            const first = filtered.length ? start + 1 : 0;
+            const last = Math.min(start + PAGE_SIZE, filtered.length);
+            document.getElementById("showingText").textContent =
+                `Showing ${first} to ${last} of ${filtered.length} orders`;
+
+            renderPagination(totalPages);
+            updateCounts();
+        }
+
+        function renderPagination(totalPages) {
+            const pagination = document.getElementById("pagination");
+            let html = `
+            <button class="page-button" data-page="${currentPage - 1}"
+                ${currentPage === 1 ? "disabled" : ""} aria-label="Previous page">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>`;
+
+            for (let page = 1; page <= totalPages; page++) {
+                html += `
+                <button class="page-button ${page === currentPage ? "active" : ""}"
+                    data-page="${page}">${page}</button>`;
+            }
+
+            html += `
+            <button class="page-button" data-page="${currentPage + 1}"
+                ${currentPage === totalPages ? "disabled" : ""} aria-label="Next page">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>`;
+
+            pagination.innerHTML = html;
+        }
+
+        function updateCounts() {
+            document.getElementById("allCount").textContent = orders.length;
+            document.getElementById("newCount").textContent =
+                orders.filter(order => order.status === "New").length;
+            document.getElementById("claimedCount").textContent =
+                orders.filter(order => order.status === "Claimed").length;
+            document.getElementById("preparingCount").textContent =
+                orders.filter(order => order.status === "Preparing").length;
+            document.getElementById("completedCount").textContent =
+                orders.filter(order => order.status === "Completed").length;
+        }
+
+        function renderDetails(order) {
+            if (!order) {
+                detailsBody.innerHTML = `<p style="color:#697386;">Select an order to view its details.</p>`;
+                return;
+            }
+
+            const itemsHTML = order.items.map(item => `
+            <div class="item-line">
+                <span>${item.qty}x</span>
+                <span>${escapeHTML(item.name)}</span>
+                <strong>${money(item.price)}</strong>
+            </div>
+        `).join("");
+
+            detailsBody.innerHTML = `
+            <div class="detail-order-top">
+                <h3>#${escapeHTML(order.id)}</h3>
+                <span class="status-badge ${statusClass(order.status)}">${escapeHTML(order.status)}</span>
+            </div>
+
+            <div class="detail-type-line">
+                <strong><i class="fa-regular fa-clipboard"></i> ${escapeHTML(order.type)}</strong>
+                <span>${escapeHTML(order.time)} • ${escapeHTML(order.date)}</span>
+            </div>
+
+            <div class="detail-section">
+                <h3><i class="fa-solid ${order.type === "Pick Up" ? "fa-store" : "fa-location-dot"}"></i> ${order.type === "Pick Up" ? "Pickup Details" : "Delivery Address"}</h3>
+                <p>${order.type === "Pick Up"
+                    ? `Pickup time: ${escapeHTML(order.pickupTime || "Not specified")}<br>${order.pickupStatus === "ready" ? "Ready for pickup now" : order.pickupStatus === "picked_up" ? "Already picked up" : "Jolie's Pizza, Zone 3, San Isidro St, San Roque, Northern Samar"}`
+                    : escapeHTML(order.address)}</p>
+            </div>
+
+            <div class="detail-section">
+                <h3><i class="fa-solid fa-user"></i> Customer Information</h3>
+                <div class="customer-detail">
+                    <i class="fa-regular fa-user"></i>
+                    <div>
+                        <strong>${escapeHTML(order.customer)}</strong>
+                        <span>${escapeHTML(order.phone)}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Order Items</h3>
+                ${itemsHTML}
+            </div>
+
+            <div class="detail-section">
+                <div class="summary-line">
+                    <span>Subtotal</span>
+                    <strong>${money(order.subtotal)}</strong>
+                </div>
+                <div class="summary-line">
+                    <span>${order.type === "Pick Up" ? "Pickup Fee" : "Delivery Fee"}</span>
+                    <strong>${money(order.deliveryFee)}</strong>
+                </div>
+                <div class="summary-line total">
+                    <span>Total</span>
+                    <strong>${money(order.total)}</strong>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Payment Method</h3>
+                <div class="payment-method">
+                    <i class="fa-regular fa-credit-card"></i>
+                    ${escapeHTML(order.payment)}
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3><i class="fa-regular fa-comment"></i> Order Note</h3>
+                <p class="order-note">${escapeHTML(order.note)}</p>
+            </div>
+
+            <div class="detail-section">
+                <h3>Actions</h3>
+                <div class="action-buttons">
+                    <button class="action-button accept" data-action="accept" ${order.status !== "New" ? "hidden" : ""}>
+                        <i class="fa-regular fa-circle-check"></i> Claim Order
+                    </button>
+                    <button class="action-button prepare" data-action="prepare" ${order.status !== "Claimed" ? "hidden" : ""}>
+                        <i class="fa-regular fa-clock"></i> Start Preparing
+                    </button>
+                    <button class="action-button ready" data-action="ready" ${order.status !== "Preparing" || order.type === "Pick Up" ? "hidden" : ""} ${!order.riderAssigned ? "disabled title=\"Assign a rider on Delivery Tracking first\"" : ""}>
+                        <i class="fa-solid fa-motorcycle"></i> Ready for Delivery
+                    </button>
+                    <button class="action-button ready" data-action="pickup-ready" ${order.status !== "Preparing" || order.type !== "Pick Up" || order.pickupStatus === "ready" || order.pickupStatus === "picked_up" ? "hidden" : ""}>
+                        <i class="fa-solid fa-bell"></i> Mark Ready for Pickup
+                    </button>
+                    <button class="action-button ready" data-action="picked-up" ${order.status !== "Preparing" || order.type !== "Pick Up" || order.pickupStatus !== "ready" ? "hidden" : ""}>
+                        <i class="fa-solid fa-check"></i> Mark Picked Up
+                    </button>
+                    <button class="action-button cancel" data-action="cancel" ${!STATUS_TRANSITIONS[order.status]?.includes("Cancelled") ? "hidden" : ""}>
+                        <i class="fa-regular fa-circle-xmark"></i> Cancel Order
+                    </button>
+                    <button class="action-button print" data-action="print">
+                        <i class="fa-solid fa-print"></i> Print Order
+                    </button>
+                </div>
+            </div>
+        `;
+        }
+
+        function selectOrder(id) {
+            const order = orders.find(item => item.id === id);
+            if (!order) return;
+
+            selectedOrderId = id;
+            document.getElementById("detailsCard").hidden = false;
+            renderOrders();
+            renderDetails(order);
+        }
+
+        async function updateOrderStatus(status) {
+            const order = orders.find(item => item.id === selectedOrderId);
+            if (!order) return;
+
+            const allowedTransitions = [...(STATUS_TRANSITIONS[order.status] || [])];
+            if (order.type === "Pick Up" && order.status === "Preparing") {
+                allowedTransitions.push("Completed");
+            }
+            if (!allowedTransitions.includes(status)) {
+                showToast(`Cannot change ${order.status} to ${status}.`);
+                return;
+            }
+
+            const account = getStaffSession();
+            if (!account) {
+                showToast("Log in with a staff or admin account to update orders.");
+                return;
+            }
+
+            const apiStatus = status === "Claimed" ? "Confirmed" : status;
+            try {
+                const response = await fetch(
+                    `${API_BASE_URL}/api/staff/orders/${encodeURIComponent(order.id)}/status`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${account.sessionToken}`
+                        },
+                        body: JSON.stringify({ status: apiStatus })
+                    }
+                );
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || "Could not update the order.");
+                }
+                showToast(`${order.id} status updated to ${status}.`);
+                await loadOrders(false);
+            } catch (error) {
+                showToast(error.message || "Could not update the order.");
+            }
+        }
+
+        async function markPickupReady(order) {
+            const account = getStaffSession();
+            if (!account) return showToast("Log in with a staff or admin account to update orders.");
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/staff/orders/${encodeURIComponent(order.id)}/pickup-ready`, {
+                    method: "POST",
+                    headers: { Authorization: `Bearer ${account.sessionToken}` }
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || "Could not mark pickup ready.");
+                showToast(result.message);
+                await loadOrders(false);
+            } catch (error) {
+                showToast(error.message || "Could not mark pickup ready.");
+            }
+        }
+
+        /* TABLE AND DETAILS EVENTS */
+        tableBody.addEventListener("click", event => {
+            const viewButton = event.target.closest("[data-view]");
+            const row = event.target.closest("tr[data-id]");
+            const id = viewButton?.dataset.view || row?.dataset.id;
+
+            if (id) selectOrder(id);
+        });
+
+        detailsBody.addEventListener("click", event => {
+            const button = event.target.closest("[data-action]");
+            if (!button) return;
+
+            const action = button.dataset.action;
+            const order = orders.find(item => item.id === selectedOrderId);
+            if (!order) return;
+
+            if (action === "accept") {
+                void updateOrderStatus("Claimed");
+            }
+
+            if (action === "prepare") {
+                void updateOrderStatus("Preparing");
+            }
+
+            if (action === "ready") {
+                void updateOrderStatus("Out for Delivery");
+            }
+
+            if (action === "picked-up") {
+                void updateOrderStatus("Completed");
+            }
+
+            if (action === "pickup-ready") {
+                void markPickupReady(order);
+            }
+
+            if (action === "cancel") {
+                if (!STATUS_TRANSITIONS[order.status]?.includes("Cancelled")) {
+                    showToast(`A ${order.status.toLowerCase()} order cannot be cancelled.`);
+                } else if (confirm(`Cancel order ${order.id}?`)) {
+                    void updateOrderStatus("Cancelled");
+                }
+            }
+
+            if (action === "print") {
+                window.print();
+            }
+        });
+
+        /* FILTER TABS */
+        document.getElementById("orderTabs").addEventListener("click", event => {
+            const tab = event.target.closest(".order-tab");
+            if (!tab) return;
+
+            document.querySelectorAll(".order-tab").forEach(item => {
+                item.classList.remove("active");
+            });
+
+            tab.classList.add("active");
+            activeStatus = tab.dataset.status;
+            currentPage = 1;
+            renderOrders();
+        });
+
+        /* SEARCH, FILTER AND SORT */
+        document.getElementById("orderSearch").addEventListener("input", () => {
+            currentPage = 1;
+            renderOrders();
+        });
+
+        document.getElementById("typeFilter").addEventListener("change", () => {
+            currentPage = 1;
+            renderOrders();
+        });
+
+        document.getElementById("sortSelect").addEventListener("change", () => {
+            currentPage = 1;
+            renderOrders();
+        });
+
+        /* PAGINATION */
+        document.getElementById("pagination").addEventListener("click", event => {
+            const button = event.target.closest("[data-page]");
+            if (!button || button.disabled) return;
+
+            currentPage = Number(button.dataset.page);
+            renderOrders();
+        });
+
+        /* SIDEBAR */
+        document.getElementById("menuToggle").addEventListener("click", () => {
+            document.getElementById("sidebar").classList.toggle("open");
+        });
+
+        document.getElementById("logoutButton").addEventListener("click", () => {
+            if (confirm("Are you sure you want to logout?")) {
+                window.location.href = "../login.html";
+            }
+        });
+
+        document.getElementById("closeDetails").addEventListener("click", () => {
+            document.getElementById("detailsCard").hidden = true;
+        });
+
+        /* DATE AND TIME */
+        function updateDateTime() {
+            const now = new Date();
+
+            document.getElementById("currentDate").textContent =
+                now.toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric"
+                });
+
+            document.getElementById("currentTime").textContent =
+                now.toLocaleDateString("en-US", { weekday: "long" }) +
+                " · " +
+                now.toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "2-digit"
+                });
+        }
+
+        /* INITIALIZE */
+        updateDateTime();
+        renderOrders();
+        void loadOrders();
+        setInterval(() => void loadOrders(false), 15000);
+    </script>
+    <script src="staff-sidebar-profile.js" defer></script>
+    <script src="staff-session.js" defer></script>
+    <script src="../shared/site-config.js?v=3" defer></script>
+</body>
+
+</html>

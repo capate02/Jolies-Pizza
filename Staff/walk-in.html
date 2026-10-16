@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="../images/logostaff.png?v=2">
+  <title>Walk-In Dine-In · Jolie's Pizza</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="payments.css">
+  <link rel="stylesheet" href="sidebar-toggle.css">
+  <link rel="stylesheet" href="staff-sidebar.css?v=3">
+  <link rel="stylesheet" href="walk-in.css?v=2">
+  <script src="staff-sidebar.js" defer></script>
+</head>
+
+<body>
+  <div class="staff-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand"><img src="../images/logostaff.png" alt="Jolie's Pizza"></div>
+      <nav class="sidebar-nav" aria-label="Staff navigation">
+        <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Dashboard</span></a>
+<a href="walk-in.html"
+          class="nav-item active" aria-current="page"><i class="fa-solid fa-store"></i><span>Walk-In
+            Customer</span></a><a
+          href="orders.html" class="nav-item"><i class="fa-regular fa-clipboard"></i><span>Orders</span></a><a
+          href="delivery-tracking.html" class="nav-item"><i class="fa-solid fa-truck-fast"></i><span>Delivery
+            Tracking</span></a><a href="inventory.html" class="nav-item"><i
+            class="fa-solid fa-cube"></i><span>Inventory</span></a><a href="menu-add-out.html" class="nav-item"><i
+            class="fa-solid fa-utensils"></i><span>Menu Availability</span></a><a href="payments.html"
+          class="nav-item"><i class="fa-regular fa-credit-card"></i><span>Payments</span></a><a href="notifications.html" class="nav-item"><i
+            class="fa-regular fa-bell"></i><span>Notifications</span></a><a href="reports.html" class="nav-item"><i
+            class="fa-solid fa-chart-column"></i><span>Reports</span></a><a href="profile.html" class="nav-item"><i
+            class="fa-regular fa-user"></i><span>Profile</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="staff-profile">
+          <div class="staff-avatar">🍕</div>
+          <div class="staff-info"><strong>Staff Account</strong><span>Online</span></div>
+        </div><button class="nav-item logout-button" id="logoutButton" type="button"><i
+            class="fa-solid fa-arrow-right-from-bracket"></i><span>Logout</span></button>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="top-header">
+        <div class="header-left"><button class="menu-toggle" id="menuToggle" type="button"
+            aria-label="Toggle sidebar"><i class="fa-solid fa-bars"></i></button>
+          <div class="welcome">
+            <h1>Walk-In Dine-In Order</h1>
+            <p>Create a counter order and record cash or GCash payment.</p>
+          </div>
+        </div>
+        <div class="header-right"><a class="header-notifications" href="payments.html"><i
+              class="fa-regular fa-credit-card"></i><span>Payments</span></a></div>
+      </header>
+      <section class="walkin-layout">
+        <div class="walkin-main">
+          <article class="walkin-card customer-card">
+            <div>
+              <h2>Customer</h2>
+              <p>Enter a name or leave it as a walk-in customer.</p>
+            </div><label>Customer name<input id="customerName" maxlength="150"
+                placeholder="Walk-in Customer"></label><label>Phone (optional)<input id="customerPhone" maxlength="30"
+                placeholder="09XX XXX XXXX"></label>
+          </article>
+          <article class="walkin-card">
+            <div class="card-heading">
+              <div>
+                <h2>Order items</h2>
+                <p id="cartCount">No items added yet</p>
+              </div><button class="primary-button" id="openMenu" type="button"><i class="fa-solid fa-utensils"></i> Open
+                menu</button>
+            </div>
+            <div id="cartItems" class="cart-items">
+              <p class="empty-cart">Choose menu items to start this order.</p>
+            </div>
+            <div class="cart-total"><span>Total</span><strong id="cartTotal">₱0.00</strong></div>
+          </article>
+        </div>
+        <aside class="walkin-card order-sidebar"><span class="walkin-tag"><i class="fa-solid fa-chair"></i>
+            DINE-IN</span>
+          <h2>Order summary</h2>
+          <p>Review the items, then choose how the customer paid.</p>
+          <div id="summaryItems"></div>
+          <div class="cart-total"><span>Total due</span><strong id="summaryTotal">₱0.00</strong></div><button
+            class="primary-button wide" id="openPayment" type="button" disabled>Continue to payment</button><a
+            class="secondary-button wide" href="payments.html">View payment history</a>
+        </aside>
+      </section>
+    </main>
+  </div>
+  <dialog id="menuModal" class="walkin-modal">
+    <div class="modal-heading">
+      <div>
+        <h2>Menu</h2>
+        <p>Select items for the dine-in order.</p>
+      </div><button class="icon-close" data-close="menuModal" aria-label="Close menu">×</button>
+    </div>
+    <div class="menu-tools"><input id="menuSearch" type="search" placeholder="Search menu"><select id="menuCategory">
+        <option value="all">All categories</option>
+      </select></div>
+    <div id="menuGrid" class="menu-grid">
+      <p>Loading menu…</p>
+    </div>
+    <div class="modal-footer"><span id="menuCartCount">0 items in order</span><button class="primary-button"
+        data-close="menuModal" type="button">Done</button></div>
+  </dialog>
+  <dialog id="paymentModal" class="walkin-modal payment-modal">
+    <div class="modal-heading">
+      <div>
+        <h2>Take payment</h2>
+        <p>Order total <strong id="paymentTotal">₱0.00</strong></p>
+      </div><button class="icon-close" data-close="paymentModal" aria-label="Close payment">×</button>
+    </div>
+    <fieldset class="payment-choice">
+      <legend>Payment method</legend><label><input type="radio" name="walkinMethod" value="Cash" checked><span><i
+            class="fa-solid fa-money-bill-wave"></i> Cash</span></label><label><input type="radio" name="walkinMethod"
+          value="GCash"><span><i class="fa-solid fa-mobile-screen-button"></i> GCash</span></label>
+    </fieldset>
+    <div id="gcashPanel" class="gcash-panel" hidden>
+      <h3>Jolie's Pizza GCash</h3>
+      <p>Ask the customer to send the exact amount to this shop account. Review the transfer receipt before marking the
+        payment paid.</p>
+      <div id="gcashAccount" class="gcash-account">Loading shop GCash details…</div><img id="gcashQR"
+        alt="Jolie's Pizza GCash QR code" hidden><label>GCash reference number<input id="proofReference" maxlength="100"
+          placeholder="Optional if receipt image is attached"></label><label>Transfer receipt image<input
+          id="proofImage" type="file" accept="image/png,image/jpeg,image/webp"><small>Optional when a reference number
+          is provided.</small></label>
+    </div>
+    <div class="modal-footer"><button class="secondary-button" data-close="paymentModal"
+        type="button">Back</button><button class="primary-button" id="submitOrder" type="button">Record payment</button>
+    </div>
+  </dialog>
+  <dialog id="receiptModal" class="walkin-modal receipt-modal">
+    <div class="receipt-paper" id="receiptPaper"></div>
+    <div class="modal-footer"><button class="secondary-button" data-close="receiptModal"
+        type="button">Close</button><button class="secondary-button" id="downloadReceipt" type="button"><i
+          class="fa-solid fa-download"></i> Download</button><button class="primary-button" id="printReceipt"
+        type="button"><i class="fa-solid fa-print"></i> Print / Save PDF</button></div>
+  </dialog>
+  <div id="walkinToast" role="status" aria-live="polite"></div>
+  <script src="walk-in.js?v=3" defer></script>
+  <script src="staff-sidebar-profile.js" defer></script>
+  <script src="staff-session.js" defer></script>
+  <script src="../shared/site-config.js?v=3" defer></script>
+</body>
+
+</html>
