@@ -3,6 +3,8 @@ require("dotenv").config();
 
 const mysql = require("mysql2/promise");
 
+const enableTiDBSsl = String(process.env.TIDB_ENABLE_SSL || "").toLowerCase() === "true";
+
 if (process.env.NODE_ENV === "production") {
     const missingDatabaseSettings = ["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"]
         .filter(key => !String(process.env[key] || "").trim());
@@ -17,6 +19,7 @@ const pool = mysql.createPool({
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "223173",
     database: process.env.DB_NAME || "jolies_pizza",
+    ssl: enableTiDBSsl ? { minVersion: "TLSv1.2" } : undefined,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
