@@ -2420,8 +2420,6 @@ async function createPayMongoCheckout(order, req) {
                     attributes: {
                         line_items: lineItems,
                         payment_method_types: ["gcash"],
-                        send_email_receipt: true,
-                        pass_on_fees: true,
                         success_url: `${baseUrl}/Customer/payment-result.html?status=processing&reference=${encodeURIComponent(order.orderNumber)}`,
                         cancel_url: `${baseUrl}/Customer/payment-result.html?status=cancelled&reference=${encodeURIComponent(order.orderNumber)}`,
                         reference_number: order.orderNumber,
