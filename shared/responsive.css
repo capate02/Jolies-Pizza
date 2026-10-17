@@ -8,6 +8,39 @@ body { width: 100%; min-width: 320px; max-width: 100%; margin: 0; overflow-x: cl
 img, video, canvas, svg { max-width: 100%; }
 input, select, textarea, button { max-width: 100%; }
 
+/* Authentication forms must keep their full width on small phones. */
+@media (max-width: 700px) {
+  body:has(.login-card), body:has(.signup-card) { min-height: 100svh; height: auto; overflow-x: hidden; overflow-y: auto; background-size: cover; background-position: center; }
+  .login-container, .signup-container { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 0; width: 100%; max-width: 100%; min-height: 100svh; height: auto; padding: 10px 0 14px; overflow: visible; }
+  .login-container .brand-section, .signup-container .brand-section { display: flex; flex: 0 0 auto; width: 100%; height: auto; min-height: 0; padding: 0 12px; overflow: visible; }
+  .login-container .brand-content, .signup-container .brand-content { width: 100%; max-width: 100%; transform: none; }
+  .login-container .pizza-logo, .signup-container .pizza-logo { width: clamp(112px, 34vw, 145px); max-height: 86px; object-fit: contain; margin: 0 auto 3px; }
+  .login-container .brand-tagline, .signup-container .brand-tagline { font-size: 11px; line-height: 1.2; }
+  .login-container .form-section, .signup-container .form-section { width: 100%; min-width: 0; min-height: 0; height: auto; padding: 4px 12px; overflow: visible; }
+  .login-card, .signup-card { width: min(100%, 360px); min-width: 0; max-width: 360px; height: auto; max-height: none; margin: 0 auto; padding: 17px 18px; border-radius: 15px; overflow: visible; }
+  .login-card .roles { width: 100%; min-width: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .signup-card .roles { width: 100%; min-width: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .login-card .role-card, .signup-card .role-card { min-width: 0; padding-left: 4px; padding-right: 4px; overflow-wrap: anywhere; }
+  .login-card .role-card p, .signup-card .role-card p { overflow-wrap: anywhere; }
+  .signup-card .welcome p br { display: none; }
+}
+
+@media (max-width: 500px) {
+  .login-card, .signup-card { width: calc(100vw - 36px); padding: 15px 14px; }
+  .login-card .welcome, .signup-card .welcome { margin-bottom: 9px; }
+  .login-card .welcome h1, .signup-card .welcome h1 { font-size: 23px; }
+  .login-card .welcome p, .signup-card .welcome p { font-size: 12px; }
+  .login-card .role-card { height: 92px; min-height: 92px; padding: 8px 3px; }
+  .signup-card .role-card { height: 108px; min-height: 108px; padding: 9px 4px; }
+  .login-card .role-icon { font-size: 23px; margin-bottom: 3px; }
+  .login-card .role-card h3, .signup-card .role-card h3 { font-size: 10px; margin-bottom: 3px; }
+  .login-card .role-card p, .signup-card .role-card p { font-size: 8px; line-height: 1.2; }
+  .login-card .section-title { margin: 8px 0; font-size: 12px; }
+  .login-card .input-group input { height: 39px; }
+  .login-card .login-btn, .signup-card .create-btn { height: 40px; }
+  .login-card .options { gap: 6px; flex-wrap: wrap; }
+}
+
 /* Let flex and grid children shrink instead of forcing a wide page. */
 .app, .app > .main, .staff-layout, .staff-layout > .main,
 main, .main, .page-content, .content, .content-area,
@@ -134,4 +167,44 @@ main, .main, .page-content, .content, .content-area,
   [class*="stats-grid"], [class*="quick-grid"], [class*="product-grid"], [class*="menu-grid"] {
     grid-template-columns: minmax(0, 1fr) !important;
   }
+}
+
+/* Customer storefront: keep the header, catalog, and checkout inside phone width. */
+@media (max-width: 760px) {
+  body:has(.header .brand-logo) { overflow-x: clip; }
+  body:has(.header .brand-logo) .page { width: 100%; max-width: 100%; min-width: 0; padding-left: 12px; padding-right: 12px; }
+  body:has(.header .brand-logo) .content,
+  body:has(.header .brand-logo) .right-panel,
+  body:has(.header .brand-logo) .menu-section,
+  body:has(.header .brand-logo) .product-card { min-width: 0; max-width: 100%; }
+  body:has(.header .brand-logo) .right-panel { grid-template-columns: minmax(0, 1fr); }
+  body:has(.header .brand-logo) .hero,
+  body:has(.header .brand-logo) .menu-hero { max-width: 100%; }
+  body:has(.header .brand-logo) .toolbar,
+  body:has(.header .brand-logo) .checkout-grid,
+  body:has(.header .brand-logo) .form-row { min-width: 0; }
+}
+
+@media (max-width: 480px) {
+  body:has(.header .brand-logo) .page { padding-left: 10px; padding-right: 10px; }
+  body:has(.header .brand-logo) .hero { padding: 18px; }
+  body:has(.header .brand-logo) .menu-hero { padding: 0 16px; }
+  body:has(.header .brand-logo) .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  body:has(.header .brand-logo) .food-image { height: 125px; }
+  body:has(.header .brand-logo) .product-content { min-width: 0; padding-left: 9px; padding-right: 9px; }
+  body:has(.header .brand-logo) .product-content h3 { font-size: 13px; overflow-wrap: anywhere; }
+  body:has(.header .brand-logo) .product-content p { font-size: 11px; }
+  body:has(.header .brand-logo) .product-content button { width: 100%; }
+  body:has(.header .brand-logo) .categories { max-width: 100%; overflow-x: auto; }
+  body:has(.header .brand-logo) .profile-menu { max-width: calc(100vw - 20px); }
+}
+
+/* Product photography is a fixed asset; show it immediately without image effects. */
+body:has(.header .brand-logo) .food-img,
+body:has(.header .brand-logo) .mini-food-img,
+body:has(.header .brand-logo) .brand-logo,
+body:has(.header .brand-logo) .cart-food-img {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
 }

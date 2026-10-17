@@ -148,7 +148,9 @@ loginForm.addEventListener("submit", async event => {
     } catch (error) {
         console.error("Login request failed:", error);
         showMessage(
-            "Unable to connect to the server. Make sure Node.js is running."
+            window.location.protocol === "file:"
+                ? "Open Jolie's Pizza through the running website address. Log in is unavailable from a local file preview."
+                : "Unable to connect to the server. Please try again in a moment."
         );
     } finally {
         loginButton.disabled = false;

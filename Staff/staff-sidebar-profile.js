@@ -36,6 +36,10 @@
             const roleNode = info.querySelector("span:not(.online-status)");
             if (nameNode) nameNode.textContent = name;
             if (roleNode) roleNode.textContent = role;
+            const avatar = card.querySelector(".staff-avatar");
+            if (avatar) avatar.innerHTML = profile.avatar
+                ? `<img src="${String(profile.avatar).replace(/[&<>\"]/g, "")}" alt="">`
+                : "👨🏻‍🍳";
             if (!card.querySelector(".staff-profile-edit")) {
                 const edit = document.createElement("a");
                 edit.className = "staff-profile-edit";

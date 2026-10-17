@@ -118,7 +118,9 @@
             });
         } catch (error) {
             console.error("Could not initialize Google sign-in:", error);
-            showStatus(error.message || "Google sign-in could not be initialized.", true);
+            showStatus(window.location.protocol === "file:"
+                ? "Open Jolie's Pizza through the running website address to use Google sign-in."
+                : error.message || "Google sign-in could not be initialized.", true);
         }
     }
 

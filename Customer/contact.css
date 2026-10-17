@@ -213,7 +213,7 @@ a {
             rgba(17,17,17,.15) 78%,
             rgba(17,17,17,.05) 100%
         ),
-        url("../images/BG for customer.png");
+        url("../images/BG for customer.webp");
 
     background-size: cover;
 
@@ -286,7 +286,7 @@ a {
             rgba(17,17,17,.25) 22%,
             rgba(17,17,17,0) 45%
         ),
-        url("../images/abou-us BG.png");
+        url("../images/about-us BG.webp");
 
     background-size: cover;
 

@@ -76,7 +76,8 @@
                 <div class="profile-top-grid">
                     <section class="profile-identity panel">
                         <div class="identity-main">
-                            <div class="portrait" aria-hidden="true"><span>👨🏻‍🍳</span></div>
+                            <div class="portrait" id="profilePortrait"><span aria-hidden="true">👨🏻‍🍳</span></div>
+                            <div class="portrait-actions"><label class="outline-action" for="avatarUpload"><i class="fa-solid fa-camera"></i> Change photo</label><input id="avatarUpload" type="file" accept="image/png,image/jpeg,image/webp" hidden><small>JPG, PNG or WebP</small></div>
                             <div class="identity-copy">
                                 <h2 id="profileName">Mark Santos</h2><strong id="profileRole">Kitchen Staff</strong>
                             </div>
@@ -307,6 +308,7 @@
             name: signedInStaffAccount?.fullName || signedInStaffAccount?.full_name || signedInStaffAccount?.name || savedProfile.name || defaultProfile.name,
             email: signedInStaffAccount?.email || savedProfile.email || defaultProfile.email
         };
+        const avatarUpload = document.getElementById("avatarUpload");
         const tabPanel = document.getElementById("tabPanel");
 
         function escapeHTML(value) {
@@ -335,7 +337,33 @@
             document.getElementById("contactPhone").textContent = profile.phone;
             document.getElementById("contactEmergency").textContent = profile.emergency;
             document.getElementById("contactEmergencyPhone").textContent = profile.emergencyPhone;
+            const portrait = document.getElementById("profilePortrait");
+            if (portrait) portrait.innerHTML = profile.avatar ? `<img src="${escapeHTML(profile.avatar)}" alt="${escapeHTML(profile.name)} profile photo">` : '<span aria-hidden="true">👨🏻‍🍳</span>';
+            document.querySelectorAll(".staff-avatar").forEach(avatar => {
+                avatar.innerHTML = profile.avatar ? `<img src="${escapeHTML(profile.avatar)}" alt="">` : "👨🏻‍🍳";
+            });
         }
+        avatarUpload.addEventListener("change", () => {
+            const file = avatarUpload.files?.[0];
+            if (!file) return;
+            if (!/^image\/(png|jpeg|webp)$/.test(file.type)) { showToast("Choose a JPG, PNG or WebP image."); avatarUpload.value = ""; return; }
+            if (file.size > 8 * 1024 * 1024) { showToast("Choose an image smaller than 8 MB."); avatarUpload.value = ""; return; }
+            const image = new Image();
+            image.onload = () => {
+                const canvas = document.createElement("canvas");
+                const scale = Math.min(1, 320 / Math.max(image.width, image.height));
+                canvas.width = Math.max(1, Math.round(image.width * scale));
+                canvas.height = Math.max(1, Math.round(image.height * scale));
+                canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+                profile.avatar = canvas.toDataURL("image/webp", 0.82);
+                try { localStorage.setItem("joliesStaffProfile", JSON.stringify(profile)); renderProfileSummary(); showToast("Profile photo saved."); }
+                catch { showToast("Could not save this photo. Choose a smaller image."); }
+                URL.revokeObjectURL(image.src);
+                avatarUpload.value = "";
+            };
+            image.onerror = () => { showToast("This image could not be opened."); avatarUpload.value = ""; };
+            image.src = URL.createObjectURL(file);
+        });
         function personalPanel() {
             const birthDate = profile.birthDate ? new Date(`${profile.birthDate}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "Not provided";
             return `<div class="tab-panel-heading"><h2>Personal Information</h2><button class="outline-action" type="button" data-edit="personal"><i class="fa-solid fa-pen"></i> Edit Information</button></div><div class="information-rows"><div><span>Full Name</span><strong>${escapeHTML(profile.name)}</strong></div><div><span>Date of Birth</span><strong>${escapeHTML(birthDate)}</strong></div><div><span>Gender</span><strong>${escapeHTML(profile.gender)}</strong></div><div><span>Civil Status</span><strong>${escapeHTML(profile.civilStatus)}</strong></div><div><span>Nationality</span><strong>${escapeHTML(profile.nationality)}</strong></div><div><span>Address</span><strong>${escapeHTML(profile.address)}</strong></div></div>`;

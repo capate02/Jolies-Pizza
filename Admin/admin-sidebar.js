@@ -5,7 +5,7 @@
   if (!nav) return;
 
   const current = decodeURIComponent(location.pathname.split("/").pop() || "dashboard.html").toLowerCase();
-  const logout = nav.querySelector(".logout-item") || sidebar.querySelector(".logout-item");
+  const logout = nav.querySelector(".logout-item, .logout") || sidebar.querySelector(".logout-item, .logout");
   const pages = [
     ["Dashboard", "dashboard.html", "dashboard"],
     ["Orders", "orders.html", "orders"],

@@ -2945,7 +2945,7 @@ function serveFile(req, res) {
     }
 
     if (requestPath === "/") {
-        requestPath = "/signup.html";
+        requestPath = "/login.html";
     }
 
     const filePath = path.resolve(PROJECT_ROOT, "." + requestPath);
@@ -2968,9 +2968,12 @@ function serveFile(req, res) {
         }
 
         const extension = path.extname(filePath).toLowerCase();
+        const stat = fs.statSync(filePath);
 
         res.writeHead(200, {
             "Content-Type": mimeTypes[extension] || "application/octet-stream",
+            "Cache-Control": extension === ".html" ? "no-cache" : "public, max-age=604800",
+            "Last-Modified": stat.mtime.toUTCString(),
             "X-Content-Type-Options": "nosniff"
         });
 

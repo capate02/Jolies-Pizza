@@ -13,7 +13,7 @@ This repository is configured as one Render Node web service. It serves the cust
 1. In Render, choose **New → Blueprint** and connect this repository.
 2. Render reads `render.yaml` and creates the `jolies-pizza` web service.
 3. When prompted, enter `APP_BASE_URL` as the final HTTPS URL Render assigns to the service, and provide the database host, username, and password. Keep the database host private; do not expose database credentials in frontend files or commit them to Git.
-4. Wait for the deploy and confirm the service health check at `/healthz` succeeds.
+4. Set the optional integration environment values below in the Render service before relying on those features. Wait for the deploy and confirm the service health check at `/healthz` succeeds.
 
 The Blueprint uses the `free` web service plan to make initial setup straightforward. Free web services can spin down when idle; choose a paid plan in Render if the restaurant needs the service to stay continuously available.
 
@@ -21,9 +21,9 @@ The Blueprint uses the `free` web service plan to make initial setup straightfor
 
 Add these in the Render service's **Environment** page if the matching feature is needed:
 
-- `GOOGLE_CLIENT_ID` for Google sign-in. Add the deployed HTTPS domain to the authorized origins for that Google OAuth client.
+- `GOOGLE_CLIENT_ID` for Google sign-in. In Google Cloud Console, add the exact deployed HTTPS origin (for example, `https://your-service.onrender.com`) to **Authorized JavaScript origins** for this OAuth Web client. The screenshot's `Error 400: origin_mismatch` is fixed by that provider-side origin registration; a code change cannot authorize an unregistered domain.
 - `GOOGLE_MAPS_API_KEY` for delivery maps. Restrict the browser key to the deployed domain and the required Maps APIs.
-- `PAYMONGO_SECRET_KEY` and `PAYMONGO_WEBHOOK_SECRET` for online checkout. Configure the PayMongo webhook to use the deployed service URL.
+- `PAYMONGO_SECRET_KEY` and `PAYMONGO_WEBHOOK_SECRET` for customer GCash checkout. Use a PayMongo secret key (`sk_test_…` or `sk_live_…`), configure the `checkout_session.payment.paid` webhook to `https://your-service.onrender.com/api/webhooks/paymongo`, and apply the payment-field migration in `backend/migrations/001_add_paymongo_payment_fields.sql` to the production database before accepting orders.
 - `GCASH_ACCOUNT_NAME`, `GCASH_ACCOUNT_NUMBER`, and `GCASH_QR_IMAGE_URL` for staff walk-in GCash instructions.
 
 Never put secret keys in the customer, staff, or admin HTML/JavaScript files.
