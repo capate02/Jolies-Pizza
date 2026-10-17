@@ -2385,7 +2385,7 @@ async function createPayMongoCheckout(order, req) {
             status: 503,
             data: {
                 success: false,
-                message: "GCash checkout is not configured. Add a PayMongo secret key starting with sk_test_ (or sk_live_) and the webhook signing secret to backend/.env. A pk_test_ public key cannot start a checkout."
+                message: "GCash payments are temporarily unavailable. Please select Cash on Delivery or contact the shop."
             }
         };
     }
@@ -2420,6 +2420,8 @@ async function createPayMongoCheckout(order, req) {
                     attributes: {
                         line_items: lineItems,
                         payment_method_types: ["gcash"],
+                        send_email_receipt: true,
+                        pass_on_fees: true,
                         success_url: `${baseUrl}/Customer/payment-result.html?status=processing&reference=${encodeURIComponent(order.orderNumber)}`,
                         cancel_url: `${baseUrl}/Customer/payment-result.html?status=cancelled&reference=${encodeURIComponent(order.orderNumber)}`,
                         reference_number: order.orderNumber,
@@ -3094,6 +3096,10 @@ const server = http.createServer(async (req, res) => {
             const session = await getApiSession(req);
             if (!session || !["staff", "admin"].includes(session.role)) return sendJSON(res, session ? 403 : 401, { success: false, message: "A staff login is required." });
             return sendJSON(res, 200, { success: true, accountName: process.env.GCASH_ACCOUNT_NAME || "", accountNumber: process.env.GCASH_ACCOUNT_NUMBER || "", qrImageUrl: process.env.GCASH_QR_IMAGE_URL || "" });
+        }
+
+        if (req.method === "GET" && url.pathname === "/api/config/payment-methods") {
+            return sendJSON(res, 200, { success: true, gcashEnabled: Boolean(getPayMongoConfig()) });
         }
 
         if (req.method === "POST" && url.pathname === "/api/staff/walk-in/orders") {
@@ -4071,7 +4077,7 @@ const server = http.createServer(async (req, res) => {
             if (!getPayMongoConfig()) {
                 return sendJSON(res, 503, {
                     success: false,
-                    message: "GCash checkout is not configured. Add a PayMongo secret key starting with sk_test_ (or sk_live_) and the webhook signing secret to backend/.env. A pk_test_ public key cannot start a checkout."
+                    message: "GCash payments are temporarily unavailable. Please select Cash on Delivery or contact the shop."
                 });
             }
 

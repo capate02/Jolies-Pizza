@@ -208,3 +208,51 @@ body:has(.header .brand-logo) .cart-food-img {
   transition: none !important;
   opacity: 1 !important;
 }
+
+/* Keep the customer checkout as a centered, scrollable card on phones. */
+@media (max-width: 760px) {
+  .checkout-modal {
+    padding: max(14px, env(safe-area-inset-top)) 16px max(14px, env(safe-area-inset-bottom)) !important;
+    align-items: center !important;
+    overflow: hidden !important;
+  }
+  .checkout-modal-box {
+    width: min(540px, calc(100vw - 40px)) !important;
+    max-width: calc(100vw - 40px) !important;
+    max-height: min(82dvh, 720px) !important;
+    overflow: hidden !important;
+    border-radius: 15px !important;
+  }
+  .checkout-modal-header { flex: 0 0 auto; padding: 13px 16px !important; }
+  .checkout-modal-header h2 { font-size: 20px !important; }
+  .checkout-modal-header p { font-size: 12px !important; }
+  .checkout-modal-body {
+    min-height: 0;
+    flex: 1 1 auto;
+    padding: 14px 16px !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .checkout-modal-body .checkout-section { margin-bottom: 14px; }
+  .checkout-modal-body .checkout-section h3 { margin-bottom: 8px; font-size: 15px; }
+  .checkout-modal-footer {
+    flex: 0 0 auto;
+    flex-direction: row !important;
+    gap: 8px;
+    padding: 10px 16px max(10px, env(safe-area-inset-bottom)) !important;
+  }
+  .checkout-modal-footer .checkout-cancel,
+  .checkout-modal-footer .place-order-button {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0;
+    height: 42px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+  .checkout-error { margin: 10px 0 0; padding: 9px 10px; font-size: 11px; }
+  .gcash-unavailable { display: block; padding: 8px 10px; border-radius: 7px; background: #fff4f2; color: #a51d17; font-size: 11px; line-height: 1.4; }
+  .gcash-unavailable[hidden] { display: none !important; }
+  .payment-option.gcash-disabled { opacity: .55; cursor: not-allowed; }
+}

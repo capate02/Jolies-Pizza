@@ -3641,7 +3641,7 @@
 
                                 <label class="payment-option">
 
-                                    <input type="radio" name="paymentMethod" value="GCash">
+                                    <input type="radio" name="paymentMethod" value="GCash" id="gcashPaymentMethod">
 
                                     <span>
                                         <i class="fa-solid fa-mobile-screen-button"></i>
@@ -3649,10 +3649,12 @@
 
                                     <div>
                                         <strong>GCash</strong>
-                                        <small>Pay using your GCash account.</small>
+                                        <small>Pay using GCash. PayMongo’s processing fee is added at checkout.</small>
                                     </div>
 
                                 </label>
+
+                                <small class="gcash-unavailable" id="gcashUnavailable" hidden>GCash payments are temporarily unavailable. Please choose Cash on Delivery.</small>
 
                             </div>
 
@@ -6328,6 +6330,7 @@
     </script>
 
 
+    <script src="payment-availability.js" defer></script>
     <script src="../shared/site-config.js?v=3" defer></script>
 </body>
 
